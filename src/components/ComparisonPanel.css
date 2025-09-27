@@ -1,0 +1,142 @@
+.comparison-panel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-secondary);
+  border-top: 2px solid var(--border-accent);
+  box-shadow: var(--shadow-glow);
+  padding: 1rem;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.panel-header h3 {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.clear-button {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.clear-button:hover {
+  border-color: var(--accent-secondary);
+  color: var(--accent-secondary);
+}
+
+.compared-startups {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+}
+
+.comparison-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--bg-card);
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  min-width: 200px;
+  position: relative;
+}
+
+.comparison-item img {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.startup-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.startup-info .name {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.startup-info .category {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+.remove-button {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.remove-button:hover {
+  background: var(--accent-secondary);
+  color: var(--text-primary);
+}
+
+.compare-button {
+  width: 100%;
+  background: var(--gradient-primary);
+  border: none;
+  color: var(--bg-primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.compare-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+@media (max-width: 768px) {
+  .comparison-panel {
+    padding: 0.75rem;
+  }
+  
+  .compared-startups {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .comparison-item {
+    min-width: auto;
+  }
+}

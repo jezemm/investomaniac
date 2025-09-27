@@ -1,0 +1,360 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(20px);
+}
+
+.modal-content {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px;
+  max-width: 550px;
+  width: 95%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-card);
+}
+
+.investment-modal {
+  padding: 0;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2.5rem 2.5rem 1rem 2.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.modal-header h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.close-button {
+  background: var(--bg-glass);
+  border: 1px solid var(--border-subtle);
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  backdrop-filter: blur(20px);
+}
+
+.close-button:hover {
+  color: var(--accent-primary);
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-glow);
+}
+
+.investment-form {
+  padding: 2.5rem;
+}
+
+.startup-summary {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  padding: 1.5rem;
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+}
+
+.modal-startup-image {
+  width: 90px;
+  height: 90px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 1px solid var(--border-subtle);
+}
+
+.startup-summary div {
+  flex: 1;
+}
+
+.startup-summary h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+.startup-summary p {
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.investment-range {
+  font-size: 0.9rem;
+  color: var(--accent-primary);
+  font-weight: 600;
+}
+
+.form-section {
+  margin-bottom: 2.5rem;
+}
+
+.form-section:last-of-type {
+  margin-bottom: 2rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.01em;
+}
+
+.amount-selection {
+  margin-bottom: 1.5rem;
+}
+
+.preset-amounts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.preset-amount {
+  padding: 1rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+.preset-amount:hover {
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+.preset-amount.selected {
+  border-color: var(--accent-primary);
+  background: var(--gradient-primary);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-glow);
+}
+
+.preset-amount:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.custom-amount-input {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.custom-amount-input:focus {
+  outline: none;
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+.form-input {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  font-size: 1rem;
+  margin-bottom: 1.25rem;
+  transition: all 0.3s ease;
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+.form-input::placeholder {
+  color: var(--text-muted);
+}
+
+.error-message {
+  color: var(--accent-secondary);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  padding-left: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.investment-summary {
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-subtle);
+  padding: 2rem;
+  border-radius: 16px;
+  margin-bottom: 2.5rem;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+}
+
+.summary-row:last-child {
+  margin-bottom: 0;
+}
+
+.summary-row.total {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 1rem;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--text-primary);
+}
+
+.amount {
+  font-weight: 700;
+  color: var(--accent-primary);
+}
+
+.invest-submit-button {
+  width: 100%;
+  background: var(--gradient-primary);
+  color: var(--text-primary);
+  border: none;
+  padding: 1.25rem 2rem;
+  border-radius: 16px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-glow);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.invest-submit-button:hover:not(:disabled) {
+  transform: translateY(-4px);
+  box-shadow: 0 0 40px rgba(0, 255, 136, 0.5);
+}
+
+.invest-submit-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.success-modal {
+  text-align: center;
+  padding: 3.5rem 2.5rem;
+}
+
+.success-icon {
+  width: 100px;
+  height: 100px;
+  background: var(--gradient-primary);
+  color: var(--text-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0 auto 2rem auto;
+  box-shadow: var(--shadow-glow);
+  border: 1px solid var(--border-accent);
+}
+
+.success-modal h2 {
+  font-size: 2rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.success-modal p {
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    margin: 1rem;
+  }
+
+  .modal-header {
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
+  }
+
+  .investment-form {
+    padding: 1.5rem;
+  }
+
+  .preset-amounts {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .startup-summary {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .modal-startup-image {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 1rem auto;
+  }
+}

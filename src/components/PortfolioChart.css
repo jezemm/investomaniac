@@ -1,0 +1,71 @@
+.portfolio-chart-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  padding: 2rem;
+  backdrop-filter: blur(20px);
+  margin-bottom: 2rem;
+}
+
+.chart-title {
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.01em;
+}
+
+.chart-wrapper {
+  position: relative;
+  width: 100%;
+  height: 300px;
+}
+
+.empty-chart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.empty-chart-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.6;
+}
+
+.empty-chart p {
+  font-size: 1rem;
+  max-width: 300px;
+}
+
+/* Recharts custom styling */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+.recharts-tooltip-wrapper {
+  border-radius: 12px !important;
+}
+
+.recharts-active-dot {
+  filter: drop-shadow(0 0 8px var(--accent-primary));
+}
+
+@media (max-width: 768px) {
+  .portfolio-chart-container {
+    padding: 1.5rem;
+  }
+  
+  .chart-wrapper {
+    height: 250px;
+  }
+  
+  .chart-title {
+    font-size: 1.125rem;
+  }
+}
