@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Startup } from '../types/Startup';
 import StartupCard from '../components/StartupCard';
 import SearchFilters from '../components/SearchFilters';
+import Pagination from '../components/Pagination';
 import { fetchYCCompanies } from '../services/ycService';
 import './HomePage.css';
 
@@ -11,7 +12,10 @@ const HomePage: React.FC = () => {
   const [filteredStartups, setFilteredStartups] = useState<Startup[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [sortBy, setSortBy] = useState<'name' | 'funding' | 'category'>('name');
+  const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const itemsPerPage = 12;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -49,12 +53,38 @@ const HomePage: React.FC = () => {
       );
     }
 
+    // Sort the filtered results
+    filtered.sort((a, b) => {
+      switch (sortBy) {
+        case 'name':
+          return a.name.localeCompare(b.name);
+        case 'funding':
+          return b.currentFunding - a.currentFunding;
+        case 'category':
+          return a.category.localeCompare(b.category);
+        default:
+          return 0;
+      }
+    });
+
     setFilteredStartups(filtered);
-  }, [startups, searchTerm, selectedCategory]);
+    setCurrentPage(1); // Reset to first page when filters change
+  }, [startups, searchTerm, selectedCategory, sortBy]);
 
   const handleStartupClick = (startupId: string) => {
     navigate(`/startup/${startupId}`);
   };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredStartups.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentStartups = filteredStartups.slice(startIndex, endIndex);
 
   if (loading) {
     return (
@@ -81,6 +111,20 @@ const HomePage: React.FC = () => {
           onCategoryChange={setSelectedCategory}
           categories={Array.from(new Set(startups.map(s => s.category)))}
         />
+
+        <div className="sort-controls">
+          <label htmlFor="sort-select">Sort by:</label>
+          <select
+            id="sort-select"
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+            className="sort-select"
+          >
+            <option value="name">Name (A-Z)</option>
+            <option value="funding">Funding (High to Low)</option>
+            <option value="category">Category</option>
+          </select>
+        </div>
       </section>
 
       <section className="results-section" aria-labelledby="results-heading">
@@ -90,28 +134,40 @@ const HomePage: React.FC = () => {
           </h2>
         </div>
 
-        <div 
-          className="startups-grid" 
-          role="grid" 
-          aria-label="Available startups for investment"
-          aria-rowcount={Math.ceil(filteredStartups.length / 3)}
-        >
-          {filteredStartups.map((startup, index) => (
-            <div 
-              key={startup.id}
-              role="gridcell"
-              aria-rowindex={Math.floor(index / 3) + 1}
-              aria-colindex={(index % 3) + 1}
+        {filteredStartups.length > 0 ? (
+          <>
+            <div
+              className="startups-grid"
+              role="grid"
+              aria-label="Available startups for investment"
+              aria-rowcount={Math.ceil(currentStartups.length / 3)}
             >
-              <StartupCard
-                startup={startup}
-                onClick={() => handleStartupClick(startup.id)}
-              />
+              {currentStartups.map((startup, index) => (
+                <div
+                  key={startup.id}
+                  role="gridcell"
+                  aria-rowindex={Math.floor(index / 3) + 1}
+                  aria-colindex={(index % 3) + 1}
+                >
+                  <StartupCard
+                    startup={startup}
+                    onClick={() => handleStartupClick(startup.id)}
+                  />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        {filteredStartups.length === 0 && (
+            {totalPages > 1 && (
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+                itemsPerPage={itemsPerPage}
+                totalItems={filteredStartups.length}
+              />
+            )}
+          </>
+        ) : (
           <div className="no-results" role="status" aria-live="polite">
             <h3>No startups found</h3>
             <p>Try adjusting your search criteria</p>
