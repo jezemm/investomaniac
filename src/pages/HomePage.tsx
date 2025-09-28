@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Startup } from '../types/Startup';
 import StartupCard from '../components/StartupCard';
 import SearchFilters from '../components/SearchFilters';
-import { mockStartups } from '../data/mockData';
+import { fetchYCCompanies } from '../services/ycService';
 import './HomePage.css';
 
 const HomePage: React.FC = () => {
@@ -15,11 +15,21 @@ const HomePage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setTimeout(() => {
-      setStartups(mockStartups);
-      setFilteredStartups(mockStartups);
-      setLoading(false);
-    }, 500);
+    const loadStartups = async () => {
+      try {
+        setLoading(true);
+        const ycCompanies = await fetchYCCompanies();
+        setStartups(ycCompanies);
+        setFilteredStartups(ycCompanies);
+      } catch (error) {
+        console.error('Failed to load YC companies:', error);
+        // You could add error handling here, maybe show a message
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadStartups();
   }, []);
 
   useEffect(() => {
@@ -50,7 +60,7 @@ const HomePage: React.FC = () => {
     return (
       <div className="loading-container">
         <div className="loading-spinner"></div>
-        <p>Loading amazing startups...</p>
+        <p>Loading Y Combinator startups...</p>
       </div>
     );
   }

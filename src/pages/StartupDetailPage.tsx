@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Startup } from '../types/Startup';
 import { usePortfolio } from '../context/PortfolioContext';
 import InvestmentModal from '../components/InvestmentModal';
-import { mockStartups } from '../data/mockData';
+import { fetchYCCompanies } from '../services/ycService';
 import './StartupDetailPage.css';
 
 const StartupDetailPage: React.FC = () => {
@@ -16,13 +16,23 @@ const StartupDetailPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (id) {
-      const foundStartup = mockStartups.find(s => s.id === id);
-      setTimeout(() => {
-        setStartup(foundStartup || null);
-        setLoading(false);
-      }, 300);
-    }
+    const loadStartup = async () => {
+      if (id) {
+        try {
+          setLoading(true);
+          const ycCompanies = await fetchYCCompanies();
+          const foundStartup = ycCompanies.find(s => s.id === id);
+          setStartup(foundStartup || null);
+        } catch (error) {
+          console.error('Failed to load startup:', error);
+          setStartup(null);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadStartup();
   }, [id]);
 
   const handleInvestmentComplete = (amount: number) => {
