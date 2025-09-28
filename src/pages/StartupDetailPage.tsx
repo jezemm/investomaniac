@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Startup } from '../types/Startup';
 import { usePortfolio } from '../context/PortfolioContext';
 import InvestmentModal from '../components/InvestmentModal';
-import { fetchYCCompanies } from '../services/ycService';
+import { getYCCompanyById } from '../services/ycService';
 import './StartupDetailPage.css';
 
 const StartupDetailPage: React.FC = () => {
@@ -20,8 +20,7 @@ const StartupDetailPage: React.FC = () => {
       if (id) {
         try {
           setLoading(true);
-          const ycCompanies = await fetchYCCompanies();
-          const foundStartup = ycCompanies.find(s => s.id === id);
+          const foundStartup = await getYCCompanyById(id);
           setStartup(foundStartup || null);
         } catch (error) {
           console.error('Failed to load startup:', error);
@@ -204,6 +203,19 @@ const StartupDetailPage: React.FC = () => {
               <span className="label">Funding Goal:</span>
               <span className="value">{formatCurrency(startup.fundingGoal)}</span>
             </div>
+            {startup.website && (
+              <div className="detail-item">
+                <span className="label">Company Website:</span>
+                <a
+                  href={startup.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="website-link"
+                >
+                  {startup.website.replace('https://', '').replace('http://', '')}
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </div>

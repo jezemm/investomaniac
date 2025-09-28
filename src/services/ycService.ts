@@ -1,4 +1,5 @@
 import { Startup } from '../types/Startup';
+import { getAllStartups, getStartupById } from '../data/startupsDatabase';
 
 interface YCCompany {
   name: string;
@@ -72,49 +73,28 @@ const generateFounders = (companyName: string): any[] => {
 
 export const fetchYCCompanies = async (): Promise<Startup[]> => {
   try {
-    const response = await fetch('https://yc-oss.github.io/api/companies/all.json');
-    if (!response.ok) {
-      throw new Error('Failed to fetch YC companies');
-    }
-
-    const companies: YCCompany[] = await response.json();
-
-    // Filter for active companies with meaningful data and recent batches
-    const activeCompanies = companies.filter(company =>
-      company.status === 'Active' &&
-      company.one_liner &&
-      company.long_description &&
-      company.team_size > 0 &&
-      ['Winter 2023', 'Summer 2023', 'Winter 2024', 'Summer 2024', 'Winter 2025'].includes(company.batch)
-    );
-
-    // Sort companies alphabetically and take first 20
-    const sortedCompanies = activeCompanies.sort((a, b) => a.name.localeCompare(b.name));
-    const transformedCompanies: Startup[] = sortedCompanies.slice(0, 20).map((company, index) => {
-      const funding = generateFundingData(company.team_size, company.industry);
-
-      return {
-        id: company.slug,
-        name: company.name,
-        tagline: company.one_liner,
-        description: company.long_description || `${company.name} is a ${company.industry.toLowerCase()} company focused on ${company.one_liner.toLowerCase()}. Based in ${company.location}, they are part of the ${company.batch} Y Combinator batch and have grown to a team of ${company.team_size} people.`,
-        image: company.small_logo_thumb_url && !company.small_logo_thumb_url.includes('missing.png')
-          ? company.small_logo_thumb_url
-          : UNSPLASH_TECH_IMAGES[index % UNSPLASH_TECH_IMAGES.length],
-        category: company.subindustry || company.industry,
-        fundingGoal: funding.fundingGoal,
-        currentFunding: funding.currentFunding,
-        minimumInvestment: funding.minimumInvestment,
-        maximumInvestment: funding.maximumInvestment,
-        founders: generateFounders(company.name),
-        createdAt: getBatchDate(company.batch),
-        website: company.website
-      };
+    // Return startups from our local database
+    // This simulates an async operation for consistency with the existing interface
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(getAllStartups());
+      }, 100); // Small delay to simulate loading
     });
-
-    return transformedCompanies;
   } catch (error) {
-    console.error('Error fetching YC companies:', error);
+    console.error('Error loading YC companies from database:', error);
+    throw error;
+  }
+};
+
+export const getYCCompanyById = async (id: string): Promise<Startup | undefined> => {
+  try {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(getStartupById(id));
+      }, 50);
+    });
+  } catch (error) {
+    console.error('Error loading YC company from database:', error);
     throw error;
   }
 };
@@ -126,6 +106,12 @@ const getBatchDate = (batch: string): string => {
     'Winter 2024': '2024-01-15',
     'Summer 2023': '2023-06-15',
     'Winter 2023': '2023-01-15',
+    'Summer 2022': '2022-06-15',
+    'Winter 2022': '2022-01-15',
+    'Summer 2021': '2021-06-15',
+    'Winter 2021': '2021-01-15',
+    'Summer 2020': '2020-06-15',
+    'Winter 2020': '2020-01-15',
   };
 
   return batchDates[batch] || '2024-01-15';
