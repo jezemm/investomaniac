@@ -68,7 +68,7 @@ const StartupCard: React.FC<StartupCardProps> = ({ startup, onClick }) => {
             Invested
           </div>
         )}
-        <button 
+        <button
           className={`compare-button ${isCompared ? 'active' : ''}`}
           onClick={handleCompareClick}
           disabled={!isCompared && !canAddMore}
@@ -76,17 +76,23 @@ const StartupCard: React.FC<StartupCardProps> = ({ startup, onClick }) => {
           title={isCompared ? 'Remove from comparison' : 'Add to comparison'}
         >
           {isCompared ? (
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18"/>
-              <line x1="6" y1="6" x2="18" y2="18"/>
-            </svg>
+            <>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+              <span>Remove</span>
+            </>
           ) : (
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M9 12l2 2 4-4"/>
-              <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3"/>
-              <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"/>
-              <path d="M12 3v6m0 6v6"/>
-            </svg>
+            <>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 12l2 2 4-4"/>
+                <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3"/>
+                <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"/>
+                <path d="M12 3v6m0 6v6"/>
+              </svg>
+              <span>Compare</span>
+            </>
           )}
         </button>
       </div>
