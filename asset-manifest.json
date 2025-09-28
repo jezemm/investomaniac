@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/investomaniac/static/css/main.c1b1228f.css",
-    "main.js": "/investomaniac/static/js/main.16a119a6.js",
+    "main.js": "/investomaniac/static/js/main.2e997427.js",
     "static/js/453.42cb6159.chunk.js": "/investomaniac/static/js/453.42cb6159.chunk.js",
     "index.html": "/investomaniac/index.html",
     "main.c1b1228f.css.map": "/investomaniac/static/css/main.c1b1228f.css.map",
-    "main.16a119a6.js.map": "/investomaniac/static/js/main.16a119a6.js.map",
+    "main.2e997427.js.map": "/investomaniac/static/js/main.2e997427.js.map",
     "453.42cb6159.chunk.js.map": "/investomaniac/static/js/453.42cb6159.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c1b1228f.css",
-    "static/js/main.16a119a6.js"
+    "static/js/main.2e997427.js"
   ]
 }
