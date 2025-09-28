@@ -18,6 +18,7 @@ export interface Startup {
   maximumInvestment: number;
   founders: Founder[];
   createdAt: string;
+  website?: string;
 }
 
 export interface Investment {

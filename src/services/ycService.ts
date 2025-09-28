@@ -13,6 +13,7 @@ interface YCCompany {
   team_size: number;
   status: string;
   tags: string[];
+  small_logo_thumb_url?: string;
 }
 
 const UNSPLASH_TECH_IMAGES = [
@@ -87,8 +88,9 @@ export const fetchYCCompanies = async (): Promise<Startup[]> => {
       ['Winter 2023', 'Summer 2023', 'Winter 2024', 'Summer 2024', 'Winter 2025'].includes(company.batch)
     );
 
-    // Take first 20 companies and transform them
-    const transformedCompanies: Startup[] = activeCompanies.slice(0, 20).map((company, index) => {
+    // Sort companies alphabetically and take first 20
+    const sortedCompanies = activeCompanies.sort((a, b) => a.name.localeCompare(b.name));
+    const transformedCompanies: Startup[] = sortedCompanies.slice(0, 20).map((company, index) => {
       const funding = generateFundingData(company.team_size, company.industry);
 
       return {
@@ -96,14 +98,17 @@ export const fetchYCCompanies = async (): Promise<Startup[]> => {
         name: company.name,
         tagline: company.one_liner,
         description: company.long_description || `${company.name} is a ${company.industry.toLowerCase()} company focused on ${company.one_liner.toLowerCase()}. Based in ${company.location}, they are part of the ${company.batch} Y Combinator batch and have grown to a team of ${company.team_size} people.`,
-        image: UNSPLASH_TECH_IMAGES[index % UNSPLASH_TECH_IMAGES.length],
+        image: company.small_logo_thumb_url && !company.small_logo_thumb_url.includes('missing.png')
+          ? company.small_logo_thumb_url
+          : UNSPLASH_TECH_IMAGES[index % UNSPLASH_TECH_IMAGES.length],
         category: company.subindustry || company.industry,
         fundingGoal: funding.fundingGoal,
         currentFunding: funding.currentFunding,
         minimumInvestment: funding.minimumInvestment,
         maximumInvestment: funding.maximumInvestment,
         founders: generateFounders(company.name),
-        createdAt: getBatchDate(company.batch)
+        createdAt: getBatchDate(company.batch),
+        website: company.website
       };
     });
 

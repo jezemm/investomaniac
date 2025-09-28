@@ -254,6 +254,18 @@
   font-weight: 600;
 }
 
+.website-link {
+  color: #3182ce;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.website-link:hover {
+  color: #2c5aa0;
+  text-decoration: underline;
+}
+
 .loading-container,
 .error-container {
   display: flex;
